@@ -1,0 +1,67 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="project_show_milestone_list">
+      <field name="name">project.task.form</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_form2"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='user_id']" position='after'>
+          <field name="milestonetype_id"/>
+          <field name="ms_color" invisible="1"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+
+  <data>
+    <record model="ir.ui.view" id="project_show_milestone_icon">
+      <field name="name">project.task.kanban</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_kanban"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[hasclass('oe_kanban_bottom_left')]/field[@name='priority']" position='before'>
+          <field name="ms_color" invisible="1"/>
+          <div id="mssymb" style="transform: rotate(45deg); width:17px; height:17px;" attrs="{'invisible':[('ms_color','=',False)]}"></div>
+        </xpath>
+      </field>
+    </record>
+  </data>
+
+
+  <data>
+   <record model="ir.ui.view" id="project_show_milestone_tree">
+      <field name="name">project.task.list</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_tree2" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='planned_hours']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='remaining_hours']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='duration']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='progress']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='name']" position="before">
+          <field name="ms_icon"/>
+        </xpath>
+        <xpath expr="//field[@name='stage_id']" position="after">
+          <field name="date_start"/>
+          <field name="date_end"/>
+          <field name="date_deadline"/>
+          <field name="date_finished"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+  
+
+
+</odoo>
+
