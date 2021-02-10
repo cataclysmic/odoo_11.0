@@ -20,5 +20,3 @@ class ProjectRiskResponse(models.Model):
     create_date = fields.Date(string='Erstellt am',
                               compute='_compute_create_date',
                               store=True)
-
-    l

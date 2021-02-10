@@ -24,6 +24,7 @@
                         <group>
                             <field name="owner_id"/>
                             <field name="project_risk_category_id" widget="selection"/>
+                            <field name="risk_class" widget="selection"/>
                         </group>
                         <group>
                             <field name="probability"/>
@@ -73,7 +74,7 @@
     <record id="project_risk_tree_view" model="ir.ui.view">
         <field name="model">project.risk</field>
         <field name="arch" type="xml">
-            <tree default_order="probclass desc"
+            <tree default_order="probclass asc"
                   decoration-danger="probclass > 50"
                   decoration-muted="state == 'draft'">
                 <field name="risk_cat_icon"/>
@@ -104,9 +105,90 @@
         </field>
     </record>
 
-    <record id="project_risk_action" model="ir.actions.act_window">
-        <field name="name">Risiken</field>
-        <field name="res_model">project.risk</field>
-        <field name="view_type">form</field>
-    </record>
+    <record id="view_project_risk_pivot" model="ir.ui.view">
+        <field name="name">project.risk.pivot</field>
+        <field name="model">project.risk</field>
+        <field name="arch" type="xml">
+            <pivot string="Project Risiken">
+                <field name="impact" type="row"/>
+                <field name="probability" type="col"/>
+          </pivot>
+      </field>
+  </record>
+
+   <record id="view_project_risk_pivot" model="ir.ui.view">
+        <field name="name">project.risk.pivot</field>
+        <field name="model">project.risk</field>
+        <field name="arch" type="xml">
+            <pivot string="Project Risiken">
+                <field name="impact" type="row"/>
+                <field name="probability" type="col"/>
+          </pivot>
+      </field>
+  </record>
+
+      <record id="view_project_risk_graph" model="ir.ui.view">
+          <field name="name">project.risk.graph</field>
+          <field name="model">project.risk</field>
+          <field name="arch" type="xml">
+              <graph string="Projekt Risiken">
+                  <field name="impact"/>
+                  <field name="probability"/>
+              </graph>
+          </field>
+      </record>
+
+
+        <!-- Project Task Kanban View -->
+        <record model="ir.ui.view" id="view_risk_kanban">
+            <field name="name">project.risk.kanban</field>
+            <field name="model">project.risk</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="rating" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
+                    <field name="owner_id"/>
+                    <field name="active"/>
+                    <field name="risk_cat_icon"/>
+                    <field name="rating"/>
+                    <field name="name"/>
+                    <field name="probclass_history"/>
+                    <templates>
+                    <t t-name="kanban-box">
+                      <div t-attf-class="oe_risk_color#{kanban_getcolor(record.rating.raw_value)} oe_kanban_global_click o_has_icon">
+                              <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="oe_kanban_record_title"><field name="name"/></strong><br/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                  <t t-if="record.probclass_history.raw_value">
+                                    <t t-raw="record.probclass_history.raw_value"/><br/>
+                                  </t>
+                                    <field name="tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </div>
+                                  <div class="o_kanban_primary_left">
+                                      <div class="o_primary">
+                                          <span t-if="record.owner_id.value">
+                                              <small><t t-esc="record.owner_id.value"/></small>
+                                          </span>
+                                      </div>
+                                  </div>
+                                </div>
+                              <div class="oe_clear"></div>
+                          </div>
+                    </t>
+                    </templates>
+                </kanban>
+            </field>
+         </record>
+
+
+    
+  <record id="project_risk_action" model="ir.actions.act_window">
+      <field name="name">Risiken</field>
+      <field name="res_model">project.risk</field>
+      <field name="view_mode">kanban,tree,pivot,graph,form</field>
+      <field name="view_type">form</field>
+  </record>
+
 </odoo>

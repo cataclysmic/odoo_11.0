@@ -1,0 +1,11 @@
+.o_kanban_view .oe_risk_color1::after{background-color: #2ca05a;}
+
+.o_kanban_view .oe_risk_color2::after{background-color: #87deaa;}
+
+.o_kanban_view .oe_risk_color3::after{background-color: #ffdd55;}
+
+.o_kanban_view .oe_risk_color4::after{background-color: #ff9955;}
+
+.o_kanban_view .oe_risk_color5::after{background-color: #d35f5f;}
+
+.o_kanban_view .oe_risk_color6::after{background-color: #892ca0;}

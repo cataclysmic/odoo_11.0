@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <template id="project_risk_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+              <div class="page">
+                <center><h3>Risikobericht</h3></center>
+                <br/>
+                <table class="table borderless" style="width:35%;">
+                  <t t-set="count11" t-value="0"></t>
+                  <t t-set="count21" t-value="0"></t>
+                  <t t-set="count31" t-value="0"></t>
+                  <t t-set="count41" t-value="0"></t>
+                  <t t-set="count51" t-value="0"></t>
+                  <t t-set="count12" t-value="0"></t>
+                  <t t-set="count22" t-value="0"></t>
+                  <t t-set="count32" t-value="0"></t>
+                  <t t-set="count42" t-value="0"></t>
+                  <t t-set="count52" t-value="0"></t>
+                  <t t-set="count13" t-value="0"></t>
+                  <t t-set="count23" t-value="0"></t>
+                  <t t-set="count33" t-value="0"></t>
+                  <t t-set="count43" t-value="0"></t>
+                  <t t-set="count53" t-value="0"></t>
+                  <t t-set="count14" t-value="0"></t>
+                  <t t-set="count24" t-value="0"></t>
+                  <t t-set="count34" t-value="0"></t>
+                  <t t-set="count44" t-value="0"></t>
+                  <t t-set="count54" t-value="0"></t>
+                  <t t-foreach="docs" t-as="risk">
+                    <t t-set="count11" t-if="risk.probclass == 11" t-value="count11+1"></t>
+                    <t t-set="count21" t-if="risk.probclass == 21" t-value="count21+1"></t>
+                    <t t-set="count31" t-if="risk.probclass == 31" t-value="count31+1"></t>
+                    <t t-set="count41" t-if="risk.probclass == 41" t-value="count41+1"></t>
+                    <t t-set="count51" t-if="risk.probclass == 51" t-value="count51+1"></t>
+                    <t t-set="count12" t-if="risk.probclass == 12" t-value="count12+1"></t>
+                    <t t-set="count22" t-if="risk.probclass == 22" t-value="count22+1"></t>
+                    <t t-set="count32" t-if="risk.probclass == 32" t-value="count32+1"></t>
+                    <t t-set="count42" t-if="risk.probclass == 42" t-value="count42+1"></t>
+                    <t t-set="count52" t-if="risk.probclass == 52" t-value="count52+1"></t>
+                    <t t-set="count13" t-if="risk.probclass == 13" t-value="count13+1"></t>
+                    <t t-set="count23" t-if="risk.probclass == 23" t-value="count23+1"></t>
+                    <t t-set="count33" t-if="risk.probclass == 33" t-value="count33+1"></t>
+                    <t t-set="count43" t-if="risk.probclass == 43" t-value="count43+1"></t>
+                    <t t-set="count53" t-if="risk.probclass == 53" t-value="count53+1"></t>
+                    <t t-set="count14" t-if="risk.probclass == 14" t-value="count14+1"></t>
+                    <t t-set="count24" t-if="risk.probclass == 24" t-value="count24+1"></t>
+                    <t t-set="count34" t-if="risk.probclass == 34" t-value="count34+1"></t>
+                    <t t-set="count44" t-if="risk.probclass == 44" t-value="count44+1"></t>
+                    <t t-set="count54" t-if="risk.probclass == 54" t-value="count54+1"></t>
+                  </t>
+                  <tr>
+                    <th>Auswirkung (A)</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  </tr>
+                  <tr>
+                    <td>extrem</td>
+                    <td style="width:50px;background-color:#ffdd55;"><span t-if="count11 != 0" t-esc="count14" style="font-weight:bold;"/></td>
+                    <td style="width:50px;background-color:#ff9955;"><span t-if="count21 != 0" t-esc="count24" style="font-weight:bold;"/></td>
+                    <td style="width:50px;background-color:#d35f5f;"><span t-if="count31 != 0" t-esc="count34" style="font-weight:bold;"/></td>
+                    <td style="width:50px;background-color:#d35f5f;"><span t-if="count41 != 0" t-esc="count44" style="font-weight:bold;"/></td>
+                    <td style="width:50px;background-color:#892ca0;"><span t-if="count51 != 0" t-esc="count54" style="font-weight:bold;color:white;"/></td>
+                  </tr>
+                  <tr>
+                    <td>beeinträchtigend</td>
+                    <td style="background-color:#87deaa;"><span t-if="count12 != 0" t-esc="count13" style="font-weight:bold;"/></td>
+                    <td style="background-color:#ffdd55;"><span t-if="count22 != 0" t-esc="count23" style="font-weight:bold;"/></td>
+                    <td style="background-color:#ff9955;"><span t-if="count32 != 0" t-esc="count33" style="font-weight:bold;"/></td>
+                    <td style="background-color:#d35f5f;"><span t-if="count42 != 0" t-esc="count43" style="font-weight:bold;"/></td>
+                    <td style="background-color:#892ca0;"><span t-if="count52 != 0" t-esc="count53" style="font-weight:bold;color:white;"/></td>
+                  </tr>
+                  <tr>
+                    <td>spürbar</td>
+                    <td style="background-color:#2ca05a;"><span t-if="count13 != 0" t-esc="count12" style="font-weight:bold;"/></td>
+                    <td style="background-color:#87deaa;"><span t-if="count23 != 0" t-esc="count22" style="font-weight:bold;"/></td>
+                    <td style="background-color:#ffdd55;"><span t-if="count33 != 0" t-esc="count32" style="font-weight:bold;"/></td>
+                    <td style="background-color:#ff9955;"><span t-if="count43 != 0" t-esc="count42" style="font-weight:bold;"/></td>
+                    <td style="background-color:#892ca0;"><span t-if="count53 != 0" t-esc="count52" style="font-weight:bold;color:white;"/></td>
+                  </tr>
+                  <tr>
+                    <td>minimal</td>
+                    <td style="background-color:#2ca05a;"><span t-if="count14 != 0" t-esc="count11" style="font-weight:bold;"/></td>
+                    <td style="background-color:#2ca05a;"><span t-if="count24 != 0" t-esc="count21" style="font-weight:bold;"/></td>
+                    <td style="background-color:#87deaa;"><span t-if="count34 != 0" t-esc="count31" style="font-weight:bold;"/></td>
+                    <td style="background-color:#ffdd55;"><span t-if="count44 != 0" t-esc="count41" style="font-weight:bold;"/></td>
+                    <td style="background-color:#892ca0;"><span t-if="count54 != 0" t-esc="count51" style="font-weight:bold;color:white;"/></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>&lt;=25%</td>
+                    <td>&lt;=50%</td>
+                    <td>&gt;50%</td>
+                    <td>&gt;=75%</td>
+                    <td>100%</td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th colspan="5">Eintrittswahrscheinlichkeit (P)</th>
+                  </tr>
+                </table>
+                <table class="table table-bordered">
+                  <tr>
+                    <th></th>
+                    <th>Teilprojekt</th>
+                    <th>Aufgabe</th>
+                    <th>Primäre Auswirkung</th>
+                    <th>(A)</th>
+                    <th>(P)</th>
+                    <th>Risikobeschreibung</th>
+                    <th>Gegenmaßnahmen</th>
+                  </tr>
+
+                  <t t-foreach="docs.sorted(key=lambda x: x.probclass,reverse=True)" t-as="task">
+                    <t t-if="task.impact is not False">
+                      <tr>
+                        <t t-if="task.probclass in (11,12,21)">
+                          <td style="width:10px;background-color:#2ca05a"></td>
+                        </t>
+                        <t t-if="task.probclass in (13,22,31)">
+                          <td style="width:10px;background-color:#87deaa"></td>
+                        </t>
+                        <t t-if="task.probclass in (14,23,32,41)">
+                          <td style="width:10px;background-color:#ffdd55"></td>
+                        </t>
+                        <t t-if="task.probclass in (24,33,43)">
+                          <td style="width:10px;background-color:#ff9955"></td>
+                        </t>
+                        <t t-if="task.probclass in (34,43,44)">
+                          <td style="width:10px;background-color:#d35f5f"></td>
+                        </t>
+                        <t t-if="task.probclass > 50">
+                          <td style="width:10px;background-color:#892ca0"></td>
+                        </t>
+                        <td><span t-field="task.project_id.name"/></td>
+                        <td><span t-field="task.name"/></td>
+                        <td><span t-field="task.impact_type"/></td>
+                        <td><span t-field="task.impact_print"/></td>
+                        <td><span t-field="task.probability"/>%</td>
+                        <td><span t-field="task.risk_description"/></td>
+                        <td><span t-field="task.counter_measure"/></td>
+                      </tr>
+                    </t>
+                  </t>
+                </table>
+              </div>
+        </t>
+      </t>
+    </template>
+
+<record id="a4_wide" model="report.paperformat">
+    <field name="name">A4 - Querformat</field>
+    <field name="default" eval="True"/>
+    <field name="format">A4</field>
+    <field name="orientation">Landscape</field>
+    <field name="margin_top">1</field>
+    <field name="margin_bottom">1</field>
+    <field name="margin_left">1</field>
+    <field name="margin_right">1</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">3</field>
+    <field name="orientation">Landscape</field>
+    <field name="dpi">90</field>
+    <field name="type">qweb-pdf</field>
+</record>
+
+    <report
+        id="report_project_risk_action"
+        model="project.task"
+        name="risk_matrix.project_risk_report"
+        string="Risikenübersicht"
+        report_type="qweb-pdf"
+        groups="risk_matrix.group_project_risk"
+        paperformat="a4_wide"
+        multi="False"/>
+
+
+</odoo>

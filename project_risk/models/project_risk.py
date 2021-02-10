@@ -12,11 +12,26 @@ PROBABILITY = [
 ]
 
 IMPACT = {
-    1: '1 - minimal',
-    2: '2 - spürbar',
-    3: '3 - beeinträchtigen',
-    4: '4 - extrem'
+    4: 'minimal',
+    3: 'spürbar',
+    2: 'beeinträchtigen',
+    1: 'extrem'
 }
+
+RATING = [
+            (1,'I'),
+            (2,'II'),
+            (3,'III'),
+            (4,'IV'),
+            (5,'V'),
+            (6,'VI')
+        ]
+
+CHANGE = [
+    (1,'erhöht'),
+    (2,'unverändert'),
+    (3,'vermindert')
+]
 
 class ProjectRisk(models.Model):
     _inherit = ['mail.thread']
@@ -59,11 +74,14 @@ class ProjectRisk(models.Model):
         string="Auswirkung"
     )
 
-    rating = fields.Char( # Selection field?
+    rating = fields.Selection( # Selection field?
+        selection=RATING,
         compute='_compute_rating',
         store=True,
         string="Klasse"
     )
+
+    #rating = fields.Integer(string="Risikoklasse")
 
     active = fields.Boolean(default=True)
 
@@ -93,15 +111,24 @@ class ProjectRisk(models.Model):
         comodel_name='project.task',
     )
 
-    tags = fields.Many2many(related='project_task_ids.tag_ids')
+    risk_class = fields.Many2one(comodel_name="project.task.milestonetype",
+                                 string="MS-Bezug")
+
+    tags = fields.Many2many(related='project_task_ids.tag_ids',string="Stichwörter")
 
     probclass_history = fields.Html(compute="_probclasshist", string="Änderung",
                                     store=True)
 
-    probclass = fields.Integer(compute='_probclass', store=True)
+    probclass = fields.Integer(compute='_probclass', store=True,string="Matrix-Code")
 
-    risk_history = fields.Boolean(compute='_probclass', string="Risikohistorie",
+    risk_history = fields.Boolean(compute='_probclass', string="Vorgänger",
                                   store=True, track_visibility='onchange')
+
+    rating_history = fields.Selection(string="Risikoänderung",
+                                    selection = CHANGE,
+                                    compute='_probclasshist',
+                                    store = True
+    )
 
     risk_cat_icon = fields.Html(compute="_compute_rating", string='Klasse',
                                 store=True)
@@ -115,35 +142,39 @@ class ProjectRisk(models.Model):
             risk.risk_history = True
 
             if risk.probability == 50:
-                risk.rating = 'VI'
-                risk.risk_cat_icon = '<div id="riskcat" style="background:#892ca0;font-weight:bold;text-align:center;color:white;"> ' + str(risk.rating) + ' </div>'
-
-            elif risk.probclass in (34,43,44):
-                risk.rating = 'V'
-                risk.risk_cat_icon = '<div id="riskcat" style="background:#d35f5f;font-weight:bold;text-align:center;"> ' + str(risk.rating) + ' </div>'
-            elif risk.probclass in (24,33,42):
-                risk.rating = 'IV'
-                risk.risk_cat_icon = '<div id="riskcat" style="background:#ff9955;font-weight:bold;text-align:center;"> ' + str(risk.rating) + ' </div>'
-            elif risk.probclass in (14,23,32,14):
-                risk.rating = 'III'
-                risk.risk_cat_icon = '<div id="riskcat" style="background:#ffdd55;font-weight:bold;text-align:center;"> ' + str(risk.rating) + ' </div>'
-            elif risk.probclass in (13,22,31):
-                risk.rating = 'II'
-                risk.risk_cat_icon = '<div id="riskcat" style="background:#87deaa;font-weight:bold;text-align:center;"> ' + str(risk.rating) + ' </div>'
-            elif risk.probclass in (11,12,21):
-                risk.rating = 'I'
-                risk.risk_cat_icon = '<div id="riskcat" style="background:#2ca05a;font-weight:bold;text-align:center;color:white;"> ' + str(risk.rating) + ' </div>'
+                risk.rating = 5
+                risk.risk_cat_icon = '<div id="riskcat" style="background:#892ca0;font-weight:bold;text-align:center;color:white;"> ' + RATING[risk.rating-1][1] + ' </div>'
+            elif risk.probclass in (31,42,41):
+                risk.rating = 5
+                risk.risk_cat_icon = '<div id="riskcat" style="background:#d35f5f;font-weight:bold;text-align:center;"> ' + RATING[risk.rating-1][1] + ' </div>'
+            elif risk.probclass in (21,32,43):
+                risk.rating = 4
+                risk.risk_cat_icon = '<div id="riskcat" style="background:#ff9955;font-weight:bold;text-align:center;"> ' + RATING[risk.rating-1][1] + ' </div>'
+            elif risk.probclass in (11,22,33,44):
+                risk.rating = 3
+                risk.risk_cat_icon = '<div id="riskcat" style="background:#ffdd55;font-weight:bold;text-align:center;"> ' + RATING[risk.rating-1][1] + ' </div>'
+            elif risk.probclass in (12,23,34):
+                risk.rating = 2
+                risk.risk_cat_icon = '<div id="riskcat" style="background:#87deaa;font-weight:bold;text-align:center;"> ' + RATING[risk.rating-1][1] + ' </div>'
+            elif risk.probclass in (14,13,24):
+                risk.rating = 1
+                risk.risk_cat_icon = '<div id="riskcat" style="background:#2ca05a;font-weight:bold;text-align:center;color:white;"> ' + RATING[risk.rating-1][1] + ' </div>'
 
     @api.onchange('probability', 'impact')
     def _probclasshist(self):
         if self._origin:
-            if self._origin.probability:
-                prob_origin = self._origin.probability
+            if self._origin.rating:
+                rating_origin = self._origin.rating
                 for rec in self:
-                    if rec.probability > prob_origin:
+                    if rec.rating > rating_origin:
                         rec.probclass_history = '<div id="riskhist" style="color:red;">erhöht</div>'
-                    elif rec.probability < prob_origin:
+                        rec.rating_history = 1
+                    elif rec.rating < rating_origin:
                         rec.probclass_history = '<div id="riskhist" style="color:green;">vermindert</div>'
+                        rec.rating_history = 3
+                    else:
+                        rec.probclass_history = '<div id="riskhist">unverändert</div>'
+                        rec.rating_history = 2
 
 
     @api.multi

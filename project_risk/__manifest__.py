@@ -7,7 +7,10 @@
     'category': 'Project Management',
     'version': '11.0.1.0.0',
     'depends': [
-        'project'
+        'base',
+        'project',
+        'project_show_milestone',
+        'html_field_in_tree_view'
     ],
     'data': [
         'security/ir_model_access.xml',
@@ -21,6 +24,8 @@
         'views/project_risk_task_view.xml',
 
         'menuitems.xml',
+
+        'views/css.xml',
     ],
     'installable': True,
 }

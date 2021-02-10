@@ -1,0 +1,78 @@
+
+      <!--<field name="view_mode">kanban,tree,pivot,graph</field>-->
+
+
+<!--
+    <record id="project_risk_search_view" model="ir.ui.view">
+        <field name="model">project.risk</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_task_ids"/>
+                <field name="tags"/>
+                <field name="rating"/>
+                <filter name="active" string="Active"
+                        domain="[('state', '=', 'active')]" />
+
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_project_risk_pivot" model="ir.ui.view">
+        <field name="name">project.risk.pivot</field>
+        <field name="model">project.risk</field>
+        <field name="arch" type="xml">
+            <pivot string="Project Risiken">
+                <field name="impact" type="row"/>
+                <field name="probability" type="col"/>
+          </pivot>
+      </field>
+  </record>
+
+      <record id="view_project_risk_graph" model="ir.ui.view">
+          <field name="name">project.risk.graph</field>
+          <field name="model">project.risk</field>
+          <field name="arch" type="xml">
+              <graph string="Projekt Risiken">
+                  <field name="impact"/>
+                  <field name="probability"/>
+              </graph>
+          </field>
+      </record>
+
+        <!-- Project Task Kanban View 
+        <record model="ir.ui.view" id="view_risk_kanban">
+            <field name="name">project.risk.kanban</field>
+            <field name="model">project.risk</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="rating" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
+                    <field name="owner_id"/>
+                    <field name="active"/>
+                    <field name="risk_cat_icon"/>
+                    <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="oe_kanban_bottom_right">
+                                      <t t-raw="record.risk_cat_icon.raw_value" style="width:100%"/>
+                                      <br/>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                      <strong class="o_kanban_record_title"><field name="name"/></strong><br/>
+                                    </div>
+                                <br/>
+                                      <small class="o_kanban_record_subtitle text-muted">
+                                        <span><field name="owner_id"/></span>
+                                      </small>
+                                </div>
+                              </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                    </templates>
+                </kanban>
+            </field>
+         </record>
+-->
+
