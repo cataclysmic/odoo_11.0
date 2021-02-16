@@ -116,27 +116,16 @@
       </field>
   </record>
 
-   <record id="view_project_risk_pivot" model="ir.ui.view">
-        <field name="name">project.risk.pivot</field>
-        <field name="model">project.risk</field>
-        <field name="arch" type="xml">
-            <pivot string="Project Risiken">
-                <field name="impact" type="row"/>
-                <field name="probability" type="col"/>
-          </pivot>
+  <record id="view_project_risk_graph" model="ir.ui.view">
+      <field name="name">project.risk.graph</field>
+      <field name="model">project.risk</field>
+      <field name="arch" type="xml">
+          <graph string="Projekt Risiken">
+              <field name="impact"/>
+              <field name="probability"/>
+          </graph>
       </field>
   </record>
-
-      <record id="view_project_risk_graph" model="ir.ui.view">
-          <field name="name">project.risk.graph</field>
-          <field name="model">project.risk</field>
-          <field name="arch" type="xml">
-              <graph string="Projekt Risiken">
-                  <field name="impact"/>
-                  <field name="probability"/>
-              </graph>
-          </field>
-      </record>
 
 
         <!-- Project Task Kanban View -->
