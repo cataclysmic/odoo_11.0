@@ -142,7 +142,7 @@ class ProjectRisk(models.Model):
             risk.risk_history = True
 
             if risk.probability == 50:
-                risk.rating = 5
+                risk.rating = 6
                 risk.risk_cat_icon = '<div id="riskcat" style="background:#892ca0;font-weight:bold;text-align:center;color:white;"> ' + RATING[risk.rating-1][1] + ' </div>'
             elif risk.probclass in (31,42,41):
                 risk.rating = 5
