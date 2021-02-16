@@ -4,7 +4,6 @@ from odoo import models, fields, api
 
 class project_show_milestone(models.Model):
     _inherit = 'project.task'
-    _description = 'Adds milestone indicator to project kanban view and allows for various milestone type in task'
 
     milestonetype_id = fields.Many2one('project.task.milestonetype',
                                     string="Meilensteinklasse")
