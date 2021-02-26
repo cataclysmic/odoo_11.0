@@ -38,9 +38,11 @@ class ProjectRisk(models.Model):
     _name = 'project.risk'
     _description = 'Project Risk'
 
-    #project_id = fields.Many2one(
-    #    compute ='_compute_project',
-    #)
+    project_risk_source_id = fields.Many2one(
+        string="Risikoquelle",
+        comodel_name="project.risk.source",
+        required=True
+    )
 
     project_task_ids = fields.Many2many(
         comodel_name='project.task',
@@ -55,7 +57,7 @@ class ProjectRisk(models.Model):
 
     name = fields.Char(
         string="Bezeichnung",
-        required=1
+        required=True
     )
 
     description = fields.Html()

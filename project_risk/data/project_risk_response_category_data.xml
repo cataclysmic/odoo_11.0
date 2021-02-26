@@ -4,26 +4,26 @@
 
 <odoo noupdate="1">
     <record id="project_risk_response_category_avoid" model="project.risk.response.category">
-        <field name="name">Avoid</field>
+        <field name="name">Vermeiden</field>
     </record>
 
     <record id="project_risk_response_category_reduce" model="project.risk.response.category">
-        <field name="name">Reduce</field>
+        <field name="name">Vermindern</field>
     </record>
 
     <record id="project_risk_response_category_fallback" model="project.risk.response.category">
-        <field name="name">Fall back</field>
+        <field name="name">Überwälzen</field>
     </record>
 
     <record id="project_risk_response_category_transfer" model="project.risk.response.category">
-        <field name="name">Transfer</field>
+        <field name="name">Übertragen</field>
     </record>
 
     <record id="project_risk_response_category_accept" model="project.risk.response.category">
-        <field name="name">Accept</field>
+        <field name="name">Akzeptieren</field>
     </record>
 
     <record id="project_risk_response_category_share" model="project.risk.response.category">
-        <field name="name">Share</field>
+        <field name="name">Diversifizieren</field>
     </record>
 </odoo>

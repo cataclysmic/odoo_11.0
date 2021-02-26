@@ -24,6 +24,27 @@
         <field name="perm_write" eval="1"/>
         <field name="perm_unlink" eval="1"/>
     </record>
+    <!-- Risk Source -->
+    <record id="project_risk_source_user_access" model="ir.model.access">
+        <field name="name">project_risk_source_user_access</field>
+        <field name="model_id" ref="model_project_risk_source"/>
+        <field name="group_id" ref="project.group_project_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="project_risk_source_manager_access" model="ir.model.access">
+        <field name="name">project_risk_source_manager_access</field>
+        <field name="model_id" ref="model_project_risk_source"/>
+        <field name="group_id" ref="project.group_project_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
 
     <!-- Risk Category -->
     <record id="project_risk_category_user_access" model="ir.model.access">

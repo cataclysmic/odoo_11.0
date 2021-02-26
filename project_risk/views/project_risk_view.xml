@@ -23,8 +23,9 @@
                     <group>
                         <group>
                             <field name="owner_id"/>
-                            <field name="project_risk_category_id" widget="selection"/>
+                            <field name="project_risk_category_id"/>
                             <field name="risk_class" widget="selection"/>
+                            <field name="project_risk_source_id"/>
                         </group>
                         <group>
                             <field name="probability"/>

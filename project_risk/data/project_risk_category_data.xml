@@ -4,18 +4,14 @@
 
 <odoo noupdate="1">
     <record id="project_risk_category_quality" model="project.risk.category">
-        <field name="name">Quality</field>
+        <field name="name">Qualität</field>
     </record>
 
-    <record id="project_risk_category_network" model="project.risk.category">
-        <field name="name">Network</field>
+    <record id="project_risk_category_reputation" model="project.risk.category">
+        <field name="name">Reputation</field>
     </record>
 
     <record id="project_risk_category_legal" model="project.risk.category">
-        <field name="name">Legal</field>
-    </record>
-
-    <record id="project_risk_category_supplier" model="project.risk.category">
-        <field name="name">Supplier</field>
+        <field name="name">Rechtlich</field>
     </record>
 </odoo>
