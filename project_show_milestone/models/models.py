@@ -4,6 +4,7 @@ from odoo import models, fields, api
 
 class project_show_milestone(models.Model):
     _inherit = 'project.task'
+    _description = "Project Task"
 
     milestonetype_id = fields.Many2one('project.task.milestonetype',
                                     string="Meilensteinklasse")
