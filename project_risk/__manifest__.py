@@ -10,7 +10,8 @@
         'base',
         'project',
         'project_show_milestone',
-        'html_field_in_tree_view'
+        'html_field_in_tree_view',
+        'piece_accounting'
     ],
     'data': [
         'security/ir_model_access.xml',

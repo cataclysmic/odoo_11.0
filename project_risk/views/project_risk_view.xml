@@ -58,7 +58,7 @@
                                     <field name="project_id"/>
                                     <field name="name"/>
                                     <field name="user_id"/>
-                                    <field name="progress" widget="progressbar"/>
+                                    <field name="fortschritt" widget="progressbar"/>
                                 </tree>
                             </field>
                         </page>
@@ -84,6 +84,7 @@
                 <field name="owner_id"/>
                 <field name="project_risk_category_id"/>
                 <field name="state"/>
+                <field name="project_risk_source_id"/>
                 <field name="project_risk_response_category_id"/>
                 <field name="probclass" invisible="1"/>
             </tree>
@@ -134,9 +135,10 @@
             <field name="name">project.risk.kanban</field>
             <field name="model">project.risk</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="rating" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
+                <kanban default_group_by="state" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
                     <field name="owner_id"/>
                     <field name="active"/>
+                    <field name="state"/>
                     <field name="risk_cat_icon"/>
                     <field name="rating"/>
                     <field name="name"/>
@@ -152,7 +154,7 @@
                                 </div>
                                 <div class="o_kanban_record_body">
                                   <t t-if="record.probclass_history.raw_value">
-                                    <t t-raw="record.probclass_history.raw_value"/><br/>
+                                    <t t-raw="record.probclass_history.raw_value"/>
                                   </t>
                                     <field name="tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                 </div>

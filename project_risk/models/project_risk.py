@@ -33,6 +33,13 @@ CHANGE = [
     (3,'vermindert')
 ]
 
+STATES = [
+            ('draft', 'Skizziert'),
+            ('active', 'Wirksam'),
+            ('closed', 'Abgeschlossen')
+        ],
+
+
 class ProjectRisk(models.Model):
     _inherit = ['mail.thread']
     _name = 'project.risk'
@@ -80,6 +87,7 @@ class ProjectRisk(models.Model):
         selection=RATING,
         compute='_compute_rating',
         store=True,
+        group_expand = RATING,
         string="Klasse"
     )
 
@@ -93,13 +101,11 @@ class ProjectRisk(models.Model):
     )
 
     state = fields.Selection(
-        selection=[
-            ('draft', 'Geplant'),
-            ('active', 'In Arbeit'),
-            ('closed', 'Beendet')
-        ],
+        string="Status",
+        selection=STATES,
         default='draft',
-        track_visibility='onchange'
+        track_visibility='onchange',
+        group_expand=STATES
     )
 
     owner_id = fields.Many2one(
@@ -118,7 +124,12 @@ class ProjectRisk(models.Model):
 
     tags = fields.Many2many(related='project_task_ids.tag_ids',string="Stichwörter")
 
-    probclass_history = fields.Html(compute="_probclasshist", string="Änderung",
+    probclass_history = fields.Html(compute="_probclasshist",
+                                    string="Änderung",
+                                    store=True)
+
+    probclass_history_exp = fields.Html(compute="_probclasshist",
+                                    string="Veränderung",
                                     store=True)
 
     probclass = fields.Integer(compute='_probclass', store=True,string="Matrix-Code")
@@ -132,7 +143,8 @@ class ProjectRisk(models.Model):
                                     store = True
     )
 
-    risk_cat_icon = fields.Html(compute="_compute_rating", string='Klasse',
+    risk_cat_icon = fields.Html(compute="_compute_rating",
+                                string='Risikoklassehtml',
                                 store=True)
 
     @api.multi
@@ -170,12 +182,15 @@ class ProjectRisk(models.Model):
                 for rec in self:
                     if rec.rating > rating_origin:
                         rec.probclass_history = '<div id="riskhist" style="color:red;">erhöht</div>'
+                        rec.probclass_history_exp = 'erhöht'
                         rec.rating_history = 1
                     elif rec.rating < rating_origin:
                         rec.probclass_history = '<div id="riskhist" style="color:green;">vermindert</div>'
+                        rec.probclass_history_exp = 'vermindert'
                         rec.rating_history = 3
                     else:
                         rec.probclass_history = '<div id="riskhist">unverändert</div>'
+                        rec.probclass_history_exp = 'unverändert'
                         rec.rating_history = 2
 
 
