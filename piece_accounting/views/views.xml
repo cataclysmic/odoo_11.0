@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="task_piece_rate">
+      <field name="name">project.task.form</field>
+      <field name="model">project.task</field>
+      <field name="priority" eval="50" />
+      <field name="inherit_id" ref="project.view_task_form2"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='planned_hours']" position='before'>
+          <field name="pieces_total"/>
+          <field name="pieces_done"/>
+          <field name="piece_time"/>
+        </xpath>
+        <xpath expr="//field[@name='tag_ids']" position='after'>
+          <field name="fortschritt" widget="progressbar" options="{'editable':true}"/>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="piece_accounting.list">
+      <field name="name">piece_accounting list</field>
+      <field name="model">piece_accounting.piece_accounting</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="piece_accounting.action_window">
+      <field name="name">piece_accounting window</field>
+      <field name="res_model">piece_accounting.piece_accounting</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="piece_accounting.action_server">
+      <field name="name">piece_accounting server</field>
+      <field name="model_id" ref="model_piece_accounting_piece_accounting"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="piece_accounting" id="piece_accounting.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="piece_accounting.menu_1" parent="piece_accounting.menu_root"/>
+    <menuitem name="Menu 2" id="piece_accounting.menu_2" parent="piece_accounting.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="piece_accounting.menu_1_list" parent="piece_accounting.menu_1"
+              action="piece_accounting.action_window"/>
+    <menuitem name="Server to list" id="piece_accounting" parent="piece_accounting.menu_2"
+              action="piece_accounting.action_server"/>
+    -->
+  </data>
+</odoo>
