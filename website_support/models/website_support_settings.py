@@ -60,6 +60,7 @@ class WebsiteSupportSettings(models.Model):
             change_user_email_template_id=self.env['ir.default'].get('website.support.settings', 'change_user_email_template_id'),
             close_ticket_email_template_id=self.env['ir.default'].get('website.support.settings', 'close_ticket_email_template_id'),
             ticket_merge_email_template_id=self.env['ir.default'].get('website.support.settings', 'ticket_merge_email_template_id'),
+            ticket_jira_email_template_id=self.env['ir.default'].get('website.support.settings', 'ticket_jira_email_template_id'),
             ticket_lock_email_template_id=self.env['ir.default'].get('website.support.settings', 'ticket_lock_email_template_id'),
             email_default_category_id=self.env['ir.default'].get('website.support.settings', 'email_default_category_id'),
             staff_reply_email_template_id=self.env['ir.default'].get('website.support.settings', 'staff_reply_email_template_id'),
