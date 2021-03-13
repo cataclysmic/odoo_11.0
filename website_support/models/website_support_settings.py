@@ -16,6 +16,7 @@ class WebsiteSupportSettings(models.Model):
     change_user_email_template_id = fields.Many2one('mail.template', domain="[('model_id','=','website.support.ticket')]", string="Change User Email Template")
     staff_reply_email_template_id = fields.Many2one('mail.template', domain="[('model_id','=','website.support.ticket.compose')]", string="Staff Reply Email Template")
     ticket_merge_email_template_id = fields.Many2one('mail.template', domain="[('model_id','=','website.support.ticket.merge')]", string="Merge Ticket Email Template")
+    ticket_jira_email_template_id = fields.Many2one('mail.template', domain="[('model_id','=','website.support.ticket.jira')]", string="Jira Ticket Email Template")
     ticket_lock_email_template_id = fields.Many2one('mail.template', domain="[('model_id','=','website.support.ticket')]", string="Lock Ticket Email Template")
     email_default_category_id = fields.Many2one('website.support.ticket.categories', string="Email Default Category")
     max_ticket_attachments = fields.Integer(string="Max Ticket Attachments")
