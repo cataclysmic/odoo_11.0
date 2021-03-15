@@ -15,6 +15,7 @@
                     <field name="change_user_email_template_id" context="{'default_model':'website.support.ticket'}"/>
                     <field name="staff_reply_email_template_id" context="{'default_model':'website.support.ticket.compose'}"/>
                     <field name="ticket_merge_email_template_id"/>
+                    <field name="ticket_jira_email_template_id"/>
                     <field name="ticket_lock_email_template_id"/>
                     <field name="email_default_category_id"/>
                     <field name="max_ticket_attachments"/>
