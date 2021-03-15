@@ -56,7 +56,7 @@
         </record>
 
         <record id="support_ticket_jira" model="mail.template">
-            <field name="name">Jira Ticket Create</field>
+            <field name="name">Jira Create Ticket</field>
             <field name="model_id" ref="model_website_support_ticket_jira"></field>
             <field name="email_from"><![CDATA[${object.ticket_id.company_id.name} <${object.ticket_id.company_id.email}>]]></field>
             <field name="email_to">${object.ticket_id.email|safe}</field>
@@ -75,6 +75,9 @@
             <p>Was hätte eigentlich passieren müssen?| ${object.verhaltenkorrekt}</p>
             <p>Nutzerrolle| ${object.nutzerrolle}</p>
             <p>Auswirkung für Fachbereich/Anwender mit Begründung| ${object.auswirkung}</p>
+            <p>Organisationen| Alle Ämter</p>
+            <p>Behörde| Sachsen-Anhalt</p>
+            <p>Telefonnummer des betroffenen Nutzers (Mehrfachnennung möglich)| Team: +49 (0)345 2318 480; ${object.ticket_id.user_id.name}: ${object.ticket_id.user_id.phone}</p>
             ]]>
             </field>
         </record>
