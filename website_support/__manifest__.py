@@ -14,6 +14,7 @@
         'views/website_support_ticket_compose_views.xml',
         'views/website_support_ticket_close_views.xml',
         'views/website_support_ticket_merge_views.xml',
+        'views/website_support_ticket_jira_views.xml',
         'views/website_support_ticket_views.xml',
         'views/website_support_ticket_categories_views.xml',
         'views/website_support_ticket_subcategory_views.xml',
