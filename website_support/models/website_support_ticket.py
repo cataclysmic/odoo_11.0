@@ -56,55 +56,54 @@ class WebsiteSupportTicket(models.Model):
             return False
 
     channel = fields.Char(string="Channel", default="Manual")
-    create_user_id = fields.Many2one('res.users', "Create User")
-    priority_id = fields.Many2one('website.support.ticket.priority', default=_default_priority_id, string="Priority")
-    parent_company_id = fields.Many2one(string="Parent Company", related="partner_id.company_id")
-    partner_id = fields.Many2one('res.partner', string="Partner")
-    partner_image = fields.Binary(related='partner_id.image_medium', string="Partner image", readonly='True')
-    user_id = fields.Many2one('res.users', string="Assigned User")
-    person_name = fields.Char(string='Person Name')
-    email = fields.Char(string="Email")
-    support_email = fields.Char(string="Support Email")
-    category = fields.Many2one('website.support.ticket.categories', string="Category", track_visibility='onchange')
-    sub_category_id = fields.Many2one('website.support.ticket.subcategory', string="Sub Category")
+    create_user_id = fields.Many2one('res.users', "Benutzer anlegen")
+    priority_id = fields.Many2one('website.support.ticket.priority', default=_default_priority_id, string="Priorität")
+    parent_company_id = fields.Many2one(string="Übergeordnetes Unternehmen", related="partner_id.company_id")
+    partner_id = fields.Many2one('res.partner', string="Kontakt")
+    partner_image = fields.Binary(related='partner_id.image_medium', string="Foto", readonly='True')
+    user_id = fields.Many2one('res.users', string="Zugewiesener Benutzer")
+    person_name = fields.Char(string='Name')
+    email = fields.Char(string="E-Mail")
+    support_email = fields.Char(string="Support E-Mail")
+    category = fields.Many2one('website.support.ticket.categories', string="Kategorie", track_visibility='onchange')
+    sub_category_id = fields.Many2one('website.support.ticket.subcategory', string="Unterkategorie")
     subject = fields.Char(string="Subject")
     description = fields.Text(string="Description")
     state = fields.Many2one('website.support.ticket.states', group_expand='_read_group_state', default=_default_state,
-                            string="State")
-    state_id = fields.Integer(related='state.id', string="State ID")
-    conversation_history = fields.One2many('website.support.ticket.message', 'ticket_id', string="Conversation History")
+                            string="Status")
+    state_id = fields.Integer(related='state.id', string="Status ID")
+    conversation_history = fields.One2many('website.support.ticket.message', 'ticket_id', string="Historie")
     attachment = fields.Binary(string="Attachments")
     attachment_filename = fields.Char(string="Attachment Filename")
     attachment_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'website.support.ticket')],
                                      string="Media Attachments")
-    unattended = fields.Boolean(string="Unattended", compute="_compute_unattend", store="True",
-                                help="In 'Open' state or 'Customer Replied' state taken into consideration name changes")
+    unattended = fields.Boolean(string="Unbetreut", compute="_compute_unattend", store="True",
+                                help="Im Status 'Offen' oder 'Kunde hat geantwortet'")
     portal_access_key = fields.Char(string="Portal Access Key")
-    ticket_number = fields.Char(string="Ticket Number", readonly=True)
-    ticket_color = fields.Char(related="priority_id.color", string="Ticket Color")
-    company_id = fields.Many2one('res.company', string="Company",
+    ticket_number = fields.Char(string="Ticket-Nummer", readonly=True)
+    ticket_color = fields.Char(related="priority_id.color", string="Ticket-Farbe")
+    company_id = fields.Many2one('res.company', string="Unternehmen",
                                  default=lambda self: self.env['res.company']._company_default_get('website.support.ticket') )
-    support_rating = fields.Integer(string="Support Rating")
-    support_comment = fields.Text(string="Support Comment")
-    close_comment = fields.Text(string="Close Comment")
-    close_time = fields.Datetime(string="Close Time")
-    close_date = fields.Date(string="Close Date")
-    closed_by_id = fields.Many2one('res.users', string="Closed By")
+    support_rating = fields.Integer(string="Support-Bewertung")
+    support_comment = fields.Text(string="Support-Kommentar")
+    close_comment = fields.Text(string="Abschlusskommentar")
+    close_time = fields.Datetime(string="Fertigstellungszeit")
+    close_date = fields.Date(string="Fertigstellungsdatum")
+    closed_by_id = fields.Many2one('res.users', string="Geschlossen von")
     close_lock = fields.Boolean(string="Close Lock")
-    time_to_close = fields.Integer(string="Time to close (seconds)")
+    time_to_close = fields.Integer(string="Zeit bis Abschluss (Sekunden)")
     extra_field_ids = fields.One2many('website.support.ticket.field', 'wst_id', string="Extra Details")
-    planned_time = fields.Datetime(string="Planned Time")
-    planned_time_format = fields.Char(string="Planned Time Format", compute="_compute_planned_time_format")
+    planned_time = fields.Datetime(string="Geplante Time")
+    planned_time_format = fields.Char(string="Geplante Zeit Format", compute="_compute_planned_time_format")
     approval_id = fields.Many2one('website.support.ticket.approval', default=_default_approval_id, string="Approval")
     approval_message = fields.Text(string="Approval Message")
     approve_url = fields.Char(compute="_compute_approve_url", string="Approve URL")
     disapprove_url = fields.Char(compute="_compute_disapprove_url", string="Disapprove URL")
     tag_ids = fields.Many2many('website.support.ticket.tag', string="Tags")
     sla_id = fields.Many2one('website.support.sla', string="SLA")
-    sla_timer = fields.Float(string="SLA Time Remaining")
+    sla_timer = fields.Float(string="SLA Restzeit")
     sla_timer_format = fields.Char(string="SLA Timer Format", compute="_compute_sla_timer_format")
-    sla_active = fields.Boolean(string="SLA Active")
-    sla_response_category_id = fields.Many2one('website.support.sla.response', string="(DEPRICATED) SLA Response Category")
+    sla_active = fields.Boolean(string="SLA Aktiv")
     sla_rule_id = fields.Many2one('website.support.sla.rule', string="SLA Rule")
     sla_alert_ids = fields.Many2many('website.support.sla.alert', string="SLA Alerts",
                                      help="Keep record of SLA alerts sent so we do not resend them")
@@ -120,7 +119,6 @@ class WebsiteSupportTicket(models.Model):
                 name = record.subject
             res.append((record.id, name))
         return res
-        
     @api.one
     @api.depends('sla_timer')
     def _compute_sla_timer_format(self):
@@ -372,7 +370,7 @@ class WebsiteSupportTicket(models.Model):
             context['default_body'] = self.partner_id.ticket_default_email_body
 
         return {
-            'name': "Support Ticket Compose",
+            'name': "Support Ticket Erstellen",
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
@@ -380,6 +378,30 @@ class WebsiteSupportTicket(models.Model):
             'context': context,
             'target': 'new'
         }
+
+    # added for jira
+    # here function for button res_model = jira Transient model
+    @api.multi
+    def jira_ticket(self):
+
+        context = {'default_ticket_id': self.id, 'default_partner_id': self.partner_id.id, 'default_email': self.email, 'default_subject': self.subject}
+
+        if self.partner_id.ticket_default_email_cc:
+            context['default_email_cc'] = self.partner_id.ticket_default_email_cc
+        if self.partner_id.ticket_default_email_body:
+            context['default_body'] = self.partner_id.ticket_default_email_body
+
+        return {
+            'name': "StBA Jira Ticket Erstellen",
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'website.support.ticket.jira',
+            'context': context,
+            'target': 'new'
+        }
+
+
 
     @api.multi
     def open_close_ticket_wizard(self):
@@ -397,7 +419,7 @@ class WebsiteSupportTicket(models.Model):
     @api.multi
     def merge_ticket(self):
         return {
-            'name': "Merge Support Ticket",
+            'name': "Support Ticket zusammenführen",
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
@@ -568,7 +590,7 @@ class WebsiteSupportTicketMerge(models.TransientModel):
     _name = "website.support.ticket.merge"
 
     ticket_id = fields.Many2one('website.support.ticket', ondelete="cascade", string="Support Ticket")
-    merge_ticket_id = fields.Many2one('website.support.ticket', ondelete="cascade", required="True", string="Merge With")
+    merge_ticket_id = fields.Many2one('website.support.ticket', ondelete="cascade", required="True", string="Zusammenführen mit")
 
     @api.multi
     def merge_tickets(self):
@@ -805,7 +827,7 @@ class WebsiteSupportTicketCompose(models.Model):
         values['model'] = "website.support.ticket"
         values['res_id'] = self.ticket_id.id
         values['reply_to'] = email_wrapper.reply_to
-        
+
         if self.email_cc:
             values['email_cc'] = self.email_cc
 
@@ -829,3 +851,110 @@ class WebsiteSupportTicketCompose(models.Model):
             #Change the ticket state to staff replied
             staff_replied = self.env['ir.model.data'].get_object('website_support','website_ticket_state_staff_replied')
             self.ticket_id.state = staff_replied.id
+
+
+class WebsiteSupportTicketJira(models.TransientModel):
+
+    _name = "website.support.ticket.jira"
+
+    # Erweiterungen
+    FASEL = [('None','None'),   #Fachanwendungsdefinition für JIRA
+             ('ALKIS','ALKIS'),
+             ('ANDB','ANDB'),
+             ('DP','DP'),
+             ('EHU','EHU'),
+             ('GA','GA'),
+             ('GWZ','GWZ'),
+             ('HHGEN','HHGEN'),
+             ('IDEV','IDEV'),
+             ('IMD','IMD'),
+             ('MR','MR'),
+             ('RDB','RDB'),
+             ('SAPS','SAPS'),
+             ('SAS','SAS'),
+             ('ZBR','ZBR'),
+             ('Diverse','Diverse')
+    ]
+    STOERUNG = [('None','None'),
+                ('Fehlermeldung','Fehlermeldung'),
+                ('Systemstörung','Systemstörung'),
+                ('Login Problem','Login Problem')
+    ]
+    ticket_id = fields.Many2one('website.support.ticket', string="Ticket ID", hidden=True)
+    email = fields.Char(string="Email", readonly="True", default="jira@")
+    fachanwendung = fields.Selection(selection=FASEL, string="Fachanwendung",default="EHU")
+    teilverfahren = fields.Char(string='Teilverfahren (optional)')
+    stoerungssachverhalt = fields.Selection(selection=STOERUNG,string="Störungssachverhalt (Dynamic)")
+    verhaltenkorrekt = fields.Text(string="Was hätte eigentlich passieren müssen?")
+    fehleraktion = fields.Text(string="Bei welcher Aktion ist der Fehler aufgetreten?")
+    fehlerbeschreibung = fields.Text(string="Wie äußert sich der Fehler?")
+    nutzerrolle = fields.Char(string='Nutzerrolle')
+    auswirkung = fields.Text(string='Auswirkung für Fachbereich/Anwender mit Begründung')
+    zeitpunkt = fields.Datetime(string="Zeitpunkt bei Auftreten des Problems")
+    attachment_ids = fields.Many2many('ir.attachment', 'sms_compose_attachment_rel', 'sms_compose_id', 'attachment_id', 'Attachments')
+    zusammenfassung = fields.Char(string="Zusammenfassung")
+    ticket_number = fields.Char(string="Interne Ticketnummer", readonly=True,
+                                related="ticket_id.ticket_number")
+    approval = fields.Boolean(string="Approval")
+    body = fields.Text(string="Message Body")
+
+    @api.onchange('template_id')
+    def _onchange_template_id(self):
+        if self.template_id:
+            values = self.env['mail.compose.message'].generate_email_for_composer(self.template_id.id, [self.ticket_id.id])[self.ticket_id.id]
+            self.body = values['body']
+
+
+    @api.one
+    def jira_tickets(self):
+
+        #Change the approval state before we send the mail
+        if self.approval:
+            #Change the ticket state to awaiting approval
+            awaiting_approval_state = self.env['ir.model.data'].get_object('website_support','website_ticket_state_awaiting_approval')
+            self.ticket_id.state = awaiting_approval_state.id
+
+            #One support request per ticket...
+            self.ticket_id.planned_time = self.planned_time
+            self.ticket_id.approval_message = self.body
+            self.ticket_id.sla_active = False
+
+        #Send email
+        values = {}
+
+        setting_ticket_jira_email_template_id = self.env['ir.default'].get('website.support.settings', 'ticket_jira_email_template_id')
+
+        if setting_ticket_jira_email_template_id:
+            email_wrapper = self.env['mail.template'].browse(setting_ticket_jira_email_template_id)
+
+        values = email_wrapper.generate_email([self.id])[self.id]
+        values['model'] = "website.support.ticket"
+        values['res_id'] = self.ticket_id.id
+        values['reply_to'] = email_wrapper.reply_to
+
+        #if self.email_cc:
+        #    values['email_cc'] = self.email_cc
+
+        for attachment in self.attachment_ids:
+            values['attachment_ids'].append((4, attachment.id))
+
+        send_mail = self.env['mail.mail'].create(values)
+        send_mail.send()
+
+        #Add to the message history to keep the data clean from the rest HTML
+        self.env['website.support.ticket.message'].create({'ticket_id': self.ticket_id.id, 'by': 'staff', 'content':values['body_html'].replace("<p>","").replace("</p>","")})
+
+        #Post in message history
+        #self.ticket_id.message_post(body=self.body, subject=self.subject, message_type='comment', subtype='mt_comment')
+
+        if self.approval:
+            #Also change the approval
+            awaiting_approval = self.env['ir.model.data'].get_object('website_support','awaiting_approval')
+            self.ticket_id.approval_id = awaiting_approval.id
+        else:
+            #Change the ticket state to staff replied
+            staff_replied = self.env['ir.model.data'].get_object('website_support','website_ticket_state_staff_replied')
+            self.ticket_id.state = staff_replied.id
+
+
+
