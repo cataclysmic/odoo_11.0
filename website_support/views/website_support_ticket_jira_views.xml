@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="website_support_ticket_jira_view_form" model="ir.ui.view">
+            <field name="name">website.support.ticket.jira.form.view</field>
+            <field name="model">website.support.ticket.jira</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="ticket_id" invisible="True"/>
+                        <field name="ticket_number"/>
+                        <field name="email"/>
+                        <field name="zusammenfassung"/>
+                        <field name="fachanwendung"/>
+                        <field name="teilverfahren"/>
+                        <field name="zeitpunkt"/>
+                        <field name="stoerungssachverhalt"/>
+                        <field name="fehleraktion"/>
+                        <field name="fehlerbeschreibung"/>
+                        <field name="verhaltenkorrekt"/>
+                        <field name="nutzerrolle"/>
+                        <field name="auswirkung"/>
+                        <field name="attachment_ids" widget="many2many_binary"/>
+                    </group>
+                  <footer>
+                      <button string="Senden" name="jira_tickets" type="object" class="btn-primary"/>
+                      <button string="Abbrechen" class="btn-default" special="cancel"/>
+                  </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
