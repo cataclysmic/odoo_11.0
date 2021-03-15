@@ -17,7 +17,7 @@
                 </xpath>
                 <sheet position="before">
                     <header>
-                        <button type="object" name="create_support_ticket" string="Create Support Ticket"/>
+                        <button type="object" name="create_support_ticket" string="Support Ticket erstellen"/>
                     </header>
                 </sheet>
                 <notebook position="inside">
