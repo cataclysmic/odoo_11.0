@@ -5,7 +5,7 @@ from random import randint
 import datetime
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT
 from odoo import SUPERUSER_ID
-from dateutil import tz
+from dateutil import tz, relativedelta
 import re
 
 import logging
@@ -55,6 +55,7 @@ class WebsiteSupportTicket(models.Model):
         except ValueError:
             return False
 
+    planned_end_date = fields.Date(string="Plantermin", default=fields.Date.today)
     channel = fields.Char(string="Channel", default="Manual")
     create_user_id = fields.Many2one('res.users', "Benutzer anlegen")
     priority_id = fields.Many2one('website.support.ticket.priority', default=_default_priority_id, string="Priorität")
@@ -81,7 +82,7 @@ class WebsiteSupportTicket(models.Model):
                                 help="Im Status 'Offen' oder 'Kunde hat geantwortet'")
     portal_access_key = fields.Char(string="Portal Access Key")
     ticket_number = fields.Char(string="Ticket-Nummer", readonly=True)
-    ticket_color = fields.Char(related="priority_id.color", string="Ticket-Farbe")
+    prio_name = fields.Char(related="priority_id.name", string="Priority Name")
     company_id = fields.Many2one('res.company', string="Unternehmen",
                                  default=lambda self: self.env['res.company']._company_default_get('website.support.ticket') )
     support_rating = fields.Integer(string="Support-Bewertung")
@@ -93,7 +94,7 @@ class WebsiteSupportTicket(models.Model):
     close_lock = fields.Boolean(string="Close Lock")
     time_to_close = fields.Integer(string="Zeit bis Abschluss (Sekunden)")
     extra_field_ids = fields.One2many('website.support.ticket.field', 'wst_id', string="Extra Details")
-    planned_time = fields.Datetime(string="Geplante Time")
+    planned_time = fields.Datetime(string="Geplante Zeit")
     planned_time_format = fields.Char(string="Geplante Zeit Format", compute="_compute_planned_time_format")
     approval_id = fields.Many2one('website.support.ticket.approval', default=_default_approval_id, string="Approval")
     approval_message = fields.Text(string="Approval Message")
@@ -706,7 +707,6 @@ class WebsiteSupportTicketPriority(models.Model):
 
     sequence = fields.Integer(string="Sequence")
     name = fields.Char(required=True, translate=True, string="Priority Name")
-    color = fields.Char(string="Color")
 
     @api.model
     def create(self, values):
@@ -953,7 +953,7 @@ class WebsiteSupportTicketJira(models.TransientModel):
             self.ticket_id.approval_id = awaiting_approval.id
         else:
             #Change the ticket state to staff replied
-            staff_replied = self.env['ir.model.data'].get_object('website_support','website_ticket_state_staff_replied')
+            staff_replied = self.env['ir.model.data'].get_object('website_support','website_ticket_state_jira_ticket')
             self.ticket_id.state = staff_replied.id
 
 
