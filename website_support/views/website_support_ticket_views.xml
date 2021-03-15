@@ -8,19 +8,20 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button type="object" name="open_reply_ticket_wizard" string="Reply" attrs="{'invisible' :[('close_time', '!=', False )]}"/>
-                        <button type="object" name="open_reply_ticket_wizard" string="Open / Reply" attrs="{'invisible' :[('close_time', '=', False )]}"/>
-                        <button type="object" name="open_close_ticket_wizard" string="Close Ticket" attrs="{'invisible' :[('close_time', '!=', False )]}"/>
-                        <button type="object" name="pause_sla" string="Pause SLA" attrs="{'invisible' :['|', ('sla_active', '==', False ), ('sla_id','==', False)]}"/>
-                        <button type="object" name="resume_sla" string="Resume SLA" attrs="{'invisible' :['|', ('sla_active', '!=', False ), ('sla_id','==', False)]}"/>
-                        <button type="object" name="send_survey" string="Send Survey"/>
-                        <button type="object" name="merge_ticket" string="Merge Tickets"/>
-                        <button type="object" name="request_approval" string="Request Approval"/>
+                        <button type="object" name="open_reply_ticket_wizard" string="Antworten" attrs="{'invisible' :[('close_time', '!=', False )]}" class="btn-primary"/>
+                        <button type="object" name="open_reply_ticket_wizard" string="Öffnen / Antworten" attrs="{'invisible' :[('close_time', '=', False )]}"/>
+                        <button type="object" name="open_close_ticket_wizard" string="Ticket schießen" attrs="{'invisible' :[('close_time', '!=', False )]}"/>
+                        <button type="object" name="pause_sla" string="SLA pausieren" attrs="{'invisible' :['|', ('sla_active', '==', False ), ('sla_id','==', False)]}"/>
+                        <button type="object" name="resume_sla" string="SLA fortsetzen" attrs="{'invisible' :['|', ('sla_active', '!=', False ), ('sla_id','==', False)]}"/>
+                        <!--<button type="object" name="send_survey" string="Umfrage schicken"/>-->
+                        <button type="object" name="merge_ticket" string="Tickets zusammenführen"/>
+                        <button type="object" name="jira_ticket" string="An StBA-Jira übermitteln" class="btn-primary"/>
+                        <button type="object" name="request_approval" string="Zustimmung abfragen"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
                             <label for="subject" class="oe_edit_only"/>
-                            <h1><field name="subject"/></h1>
+                            <h1><field name="subject" string="Betreff/Zusammenfassung"/></h1>
                         </div>
                         <div class="oe_button_box" name="button_box">
 
@@ -31,7 +32,7 @@
                                 <field name="channel"/>
                                 <field name="priority_id"/>
                                 <field name="tag_ids" widget="many2many_tags"/>
-                                <field name="category"/>
+                                <field name="category" string="Kategorie"/>
                                 <field name="sub_category_id" domain="[('parent_category_id','=',category)]"/>
                                 <field name="state"/>
                             </group>
@@ -41,8 +42,8 @@
                                 <field name="person_name"/>
                                 <field name="email"/>
                                 <field name="approval_id"/>
-                                <field name="support_rating" readonly="1"/>
-                                <field name="support_comment" readonly="1"/>
+                                <!--<field name="support_rating" readonly="1"/>-->
+                                <!--<field name="support_comment" readonly="1"/>-->
                                 <field name="close_time"/>
                             </group>
                         </group>
@@ -75,7 +76,7 @@
                                     <field name="sla_active"/>
                                     <field name="sla_timer" widget="float_time"/>
                                     <field name="sla_rule_id" domain="[('vsa_id','=',sla_id)]"/>
-                                    <field name="sla_response_category_id" domain="[('vsa_id','=',sla_id)]"/>
+                                    <!--<field name="sla_response_category_id" domain="[('vsa_id','=',sla_id)]"/>-->
                                 </group>
                             </page>
                         </notebook>
