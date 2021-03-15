@@ -15,8 +15,8 @@
                         <button type="object" name="resume_sla" string="SLA fortsetzen" attrs="{'invisible' :['|', ('sla_active', '!=', False ), ('sla_id','==', False)]}"/>
                         <!--<button type="object" name="send_survey" string="Umfrage schicken"/>-->
                         <button type="object" name="merge_ticket" string="Tickets zusammenführen"/>
-                        <button type="object" name="jira_ticket" string="An StBA-Jira übermitteln" class="btn-primary"/>
-                        <button type="object" name="request_approval" string="Zustimmung abfragen"/>
+                        <button type="object" name="jira_ticket" string="An StBA-Jira übermitteln" class="btn-info"/>
+                        <button type="object" name="request_approval" string="Genehmigung abfragen"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -44,6 +44,7 @@
                                 <field name="approval_id"/>
                                 <!--<field name="support_rating" readonly="1"/>-->
                                 <!--<field name="support_comment" readonly="1"/>-->
+                                <field name="planned_end_date"/>
                                 <field name="close_time"/>
                             </group>
                         </group>
@@ -94,7 +95,7 @@
             <field name="name">website.support.ticket.kanban.view</field>
             <field name="model">website.support.ticket</field>
             <field name="arch" type="xml">
-                <kanban class="o_res_partner_kanban" default_group_by="state" create="false">
+                <kanban class="o_res_partner_kanban" default_group_by="state">
                     <field name="subject"/>
                     <field name="priority_id"/>
                     <field name="state"/>
@@ -130,7 +131,7 @@
                     <field name="subject"/>
                     <field name="tag_ids"/>
                     <field name="partner_id"/>
-                    <filter string="Unattended Tickets" name="unattended_tickets" domain="[('unattended', '=', True )]" />
+                    <filter string="Unbearbeitete Tickets" name="unattended_tickets" domain="[('unattended', '=', True )]" />
                     <filter name="group_by_category" string="Category" domain="[]"  context="{'group_by':'category'}"/>
                     <filter name="group_by_user" string="User" domain="[]"  context="{'group_by':'user_id'}"/>
                 </search>
@@ -147,13 +148,26 @@
             </field>
         </record>
 
+
+        <record id="website_support_ticket_view_calendar" model="ir.ui.view">
+            <field name="name">website.support.ticket calendar view</field>
+            <field name="model">website.support.ticket</field>
+            <field name="arch" type="xml">
+              <calendar date_start="planned_end_date" mode="month" color="user_id">
+                <field name="subject"/>
+                <field name="priority_id"/>
+              </calendar>
+            </field>
+        </record>
+
         <record id="website_support_ticket_view_tree" model="ir.ui.view">
             <field name="name">website.support.ticket tree view</field>
             <field name="model">website.support.ticket</field>
             <field name="arch" type="xml">
-                <tree colors="black:ticket_color==False">
+              <tree decoration-danger="prio_name == 'High'"
+                    decoration-success="prio_name == 'Low'">
                     <field name="create_user_id" invisible="True"/>
-                    <field name="ticket_color" invisible="True"/>
+                    <field name="prio_name" invisible="True"/>
                     <field name="create_date"/>
                     <field name="ticket_number"/>
                     <field name="priority_id"/>
@@ -169,9 +183,9 @@
         </record>
 
         <record id="website_support_ticket_action_partner" model="ir.actions.act_window">
-            <field name="name">Support Tickets</field>
+            <field name="name">Ticketsystem</field>
             <field name="res_model">website.support.ticket</field>
-            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="view_mode">tree,kanban,calendar,form,graph</field>
             <field name="help" type="html">
                 <p>
                     No Support Tickets found
@@ -182,7 +196,7 @@
         <record id="website_support_ticket_action" model="ir.actions.act_window">
             <field name="name">Support Tickets</field>
             <field name="res_model">website.support.ticket</field>
-            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="view_mode">tree,kanban,calendar,form,graph</field>
             <field name="context">{"search_default_unattended_tickets":1, 'auto_refresh': 1, 'default_create_user_id': uid}</field>
             <field name="help" type="html">
                 <p>
