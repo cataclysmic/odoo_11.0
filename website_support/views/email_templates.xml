@@ -55,6 +55,31 @@
             </field>
         </record>
 
+        <record id="support_ticket_jira" model="mail.template">
+            <field name="name">Jira Ticket Create</field>
+            <field name="model_id" ref="model_website_support_ticket_jira"></field>
+            <field name="email_from"><![CDATA[${object.ticket_id.company_id.name} <${object.ticket_id.company_id.email}>]]></field>
+            <field name="email_to">${object.ticket_id.email|safe}</field>
+            <field name="subject">Ticket Sachsen-Anhalt (#${object.ticket_id.ticket_number or object.ticket_id.id})</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+            <p>Fachanwendung| ${object.fachanwendung}</p>
+            <p>Zusammenfassung| ${object.zusammenfassung}</p>
+            <p>Zeitpunkt des Auftretens des problems| ${object.zeitpunkt}</p>
+            <p>Ticketnummer| ${object.ticket_number}</p>
+            <p>Teilverfahren (optional)| ${object.teilverfahren}</p>
+            <p>Störungssachverhalt (Dynamic)| ${object.stoerungssachverhalt}</p>
+            <p>Bei welcher Aktion ist der Fehler aufgetreten?| ${object.fehleraktion}</p>
+            <p>Wie äußert sich der Fehler?| ${object.fehlerbeschreibung}</p>
+            <p>Was hätte eigentlich passieren müssen?| ${object.verhaltenkorrekt}</p>
+            <p>Nutzerrolle| ${object.nutzerrolle}</p>
+            <p>Auswirkung für Fachbereich/Anwender mit Begründung| ${object.auswirkung}</p>
+            ]]>
+            </field>
+        </record>
+
+
         <record id="support_ticket_survey" model="mail.template">
             <field name="name">Support Ticket Survey</field>
             <field name="model_id" ref="model_website_support_ticket"></field>
